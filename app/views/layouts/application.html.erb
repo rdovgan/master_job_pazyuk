@@ -2,8 +2,65 @@
 <html>
 <head>
   <title>PazyukStat</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag :all %>  
+  <%= javascript_include_tag "application"%>
+  <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "jquery.min"%>  
+  <%= javascript_include_tag "jquery_ujs"%>  
+  <%= javascript_include_tag "highcharts"%>
+  <%= javascript_include_tag "exporting" %>  
+
+ <style type="text/css">
+    #divOne
+    {
+        width:100%;
+        text-align:center;
+        border:dotted 1px black;
+    }
+   
+    #tblOne
+    {
+        width:400px;
+        margin:0 auto;       
+        border: solid 1px black;
+    }
+   
+ </style>
+   
+<script type="text/javascript">
+  $(function () {
+    new Highcharts.Chart({
+      chart: {type:'line', renderTo: 'container' },
+        title: {
+                text: 'Графік капіталізації підприємства'
+        },
+
+        xAxis: {            
+        },
+        
+        yAxis: {
+            title: {
+                    text: "Капіталізація (грн)"
+                },
+            type: 'line',
+            plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'            
+            }]  
+        },
+    
+        series: [{
+            name: "Час (місяць)",
+            pointInterval:<%= @obj.dt %>,
+            pointStart: <%= 0%>,
+            data: <%=@obj.mas_values%>
+        }]
+
+      });  
+  });
+</script>
+
   <%= csrf_meta_tags %>
 </head>
 <body>

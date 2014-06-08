@@ -1,0 +1,30 @@
+<div id="divOne" >
+ <h2>Деякі статистичні дані про підприємство</h1>
+ <%= link_to 'Згенерувати нові дані', start_url %>
+ <br/>
+ Стартовий капітал: <%=@obj.x0%> 
+ <table id="tblOne" >
+  <tr>
+    <th>Місяць</th>
+    <th>Прибуток</th>
+    <th>Кількість видатків</th>
+    <th>Загальна сума видатків</th>
+  </tr>
+
+  <% (1..@obj.period).each do |i| %>
+   <tr>
+    <td><%= i %></td>
+    <td><%= @obj.y[i] %></td>
+    <td><%= @obj.u_count[i] %></td>    
+    <td><%= @obj.u[i] %></td>    
+   </tr>
+  <% end %>
+ </table>
+ <br /> 
+  <%if @obj.ozn_prob == 1%>
+   Ймовірність банкрутства: <%=@obj.probability%> 
+  <%end%> 
+</div>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
