@@ -7,7 +7,7 @@ class Calc < ActiveRecord::Base
   ##############################################################################  
   def initialize(x0 = nil, n = nil)
     @x0 = x0 || rand(X0)+50
-    @n = n || N    
+    @n = n || rand(N)+8    
     @period = @n
     @y = [0] + (1..@n).map{|i| rand(100)} # надходження
     @u = [0] + (1..@n).map{|i| rand(200)} # видатки
