@@ -211,7 +211,7 @@ class Calc < ActiveRecord::Base
     x_t -= @s_ksi
     @mas_values[-1] = x_t    
     puts "Strubok new value x_t=#{x_t}"
-    xp = xp + c(@t[i]) - @s_ksi
+    xp = x_t
     if x_t<0 
      @ozn_prob = 1 
      t = @t[i]
