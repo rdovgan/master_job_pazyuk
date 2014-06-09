@@ -1,17 +1,17 @@
 class Calc < ActiveRecord::Base
   attr_accessor :mas_values, :probability, :dt, :y, :u, :u_count, :period, :x0, :ozn_prob
   
-  X0 = 300 #стартовий капітал
+  X0 = 500 #стартовий капітал
   N = 12 #кількість місяців
 
   ##############################################################################  
   def initialize(x0 = nil, n = nil)
-    @x0 = x0 || rand(X0)
+    @x0 = x0 || rand(X0)+50
     @n = n || N    
     @period = @n
-    @y = [0] + (1..@n).map{|i| rand(50)} # надходження
-    @u = [0] + (1..@n).map{|i| rand(100)} # видатки
-    @u_count = [0] + (1..@n).map{|i| rand(8)} # кількість видатків на протязі i місяця
+    @y = [0] + (1..@n).map{|i| rand(100)} # надходження
+    @u = [0] + (1..@n).map{|i| rand(200)} # видатки
+    @u_count = [0] + (1..@n).map{|i| rand(8)+1} # кількість видатків на протязі i місяця
     @t = (0..@n).to_a
     @a = calc_a
     @b11 = calc_b11
@@ -194,10 +194,11 @@ class Calc < ActiveRecord::Base
    i = 0
    @s_ksi = 0
    @ozn_prob = 0 
+   xp = @x0   
    (1..@n).step(1) do |i|
     j=1
     begin
-     x_t = @x0 + c(t)     
+     x_t = xp + c(t)     
      puts "t=#{t} x(#{t})=#{x_t}"
      @mas_values << x_t    
      t += dt
@@ -210,6 +211,7 @@ class Calc < ActiveRecord::Base
     x_t -= @s_ksi
     @mas_values[-1] = x_t    
     puts "Strubok new value x_t=#{x_t}"
+    xp = xp + c(@t[i]) - @s_ksi
     if x_t<0 
      @ozn_prob = 1 
      t = @t[i]
